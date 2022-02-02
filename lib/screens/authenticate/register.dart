@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/services/auth.dart';
 import 'package:flutter_firebase/shared/constants.dart';
+import 'package:flutter_firebase/shared/loading.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -18,18 +19,21 @@ class _RegisterState extends State<Register> {
   String password = '';
   String error = '';
 
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
-        backgroundColor: Colors.brown[400],
+        backgroundColor: Colors.blue[700],
         title: Text('Sign up'),
         actions: <Widget>[
           TextButton.icon(
             label: Text('Sign in'),
             icon: Icon(Icons.person),
             onPressed: () async => widget.toggleView(),
+            style: TextButton.styleFrom(primary: Colors.white),
           ),
         ],
       ),
@@ -49,7 +53,8 @@ class _RegisterState extends State<Register> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
-                  decoration: textInputDecoration.copyWith(hintText: 'Password'),
+                  decoration:
+                      textInputDecoration.copyWith(hintText: 'Password'),
                   validator: (val) =>
                       val!.length < 6 ? 'Enter a 6+ chars password' : null,
                   obscureText: true,
@@ -63,11 +68,14 @@ class _RegisterState extends State<Register> {
                       Text('Register', style: TextStyle(color: Colors.white)),
                   onPressed: () async {
                     if (_formkey.currentState!.validate()) {
+                      setState(() => loading = true);
+
                       dynamic result = await _auth.registerWithEmailAndPassword(
                           email, password);
                       if (result == null) {
                         setState(() {
                           error = 'Please use a valid email!';
+                          loading = false;
                         });
                       }
                     }
