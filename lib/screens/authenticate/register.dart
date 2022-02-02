@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/services/auth.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  const Register({ Key? key }) : super(key: key);
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
+
   final AuthService _auth = AuthService();
 
   String email = '';
   String password = '';
 
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
-        title: Text('Sign in'),
+        title: Text('Sign up'),
       ),
       body: Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
@@ -42,7 +44,7 @@ class _SignInState extends State<SignIn> {
                 ),
                 SizedBox(height: 20.0),
                 ElevatedButton(
-                  child: Text('Log in', style: TextStyle(color: Colors.white)),
+                  child: Text('Register', style: TextStyle(color: Colors.white)),
                   onPressed: () async {
                     print(email);
                     print(password);

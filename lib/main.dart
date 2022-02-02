@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
     return StreamProvider.value(
       value: AuthService().user,
       initialData: null,
+      catchError: (_, __) {},
       child: MaterialApp(
         home: Wrapper(),
       ),
